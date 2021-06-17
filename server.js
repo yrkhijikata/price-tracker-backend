@@ -1,9 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const { getProductInfo } = require("./utils/scraper");
 // const path = require("path");
-require("dotenv").config();
 
-// require("./utils/autoscraper");
+require("./utils/autoscraper");
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.post("/product", async (req, res) => {
   res.json(productInfo);
 });
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("application runninng");
 });
 

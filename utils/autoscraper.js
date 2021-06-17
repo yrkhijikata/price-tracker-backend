@@ -32,31 +32,35 @@ async function autoscraper(productObjs) {
 
   for (let i = 0; i < productObjs.length; i++) {
     // console.log(productObjs[i].url);
-    await page.goto(productObjs[i].url);
-    page.waitFor(1000);
-    const html = await page.content();
-    const $ = cheerio.load(html);
-    let price =
-      $("#priceblock_ourprice").text() ||
-      $("#priceblock_saleprice").text() ||
-      $("#price").text();
+    try {
+      await page.goto(productObjs[i].url);
+      page.waitFor(1000);
+      const html = await page.content();
+      const $ = cheerio.load(html);
+      let price =
+        $("#priceblock_ourprice").text() ||
+        $("#priceblock_saleprice").text() ||
+        $("#price").text();
 
-    price = Number(price.replace(/[^0-9.-]+/g, ""));
+      price = Number(price.replace(/[^0-9.-]+/g, ""));
 
-    // console.log("price--------", price);
-    await page.goBack();
+      // console.log("price--------", price);
+      await page.goBack();
 
-    await db
-      .collection("products")
-      .doc(productObjs[i].id)
-      .update({
-        price: price,
-        history: [...productObjs[i].history, { price: price, updated_at: new Date() }],
-      })
-      .then(() => console.log("price successfully updated"))
-      .catch(() => {
-        console.log("something went wronng!!");
-      });
+      await db
+        .collection("products")
+        .doc(productObjs[i].id)
+        .update({
+          price: price,
+          history: [...productObjs[i].history, { price: price, updated_at: new Date() }],
+        })
+        .then(() => console.log("price successfully updated"))
+        .catch(() => {
+          console.log("something went wronng!!");
+        });
+    } catch {
+      await page.close();
+    }
   }
   //   return newPrices;
   await browser.close();
