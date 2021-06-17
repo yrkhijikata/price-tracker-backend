@@ -1,9 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { getProductInfo } = require("./utils/scraper");
-// const path = require("path");
-
-require("./utils/autoscraper");
+const { autoscraper } = require("./utils/autoscraper");
 
 const app = express();
 
@@ -23,11 +21,6 @@ app.post("/product", async (req, res) => {
 app.get("/", (_, res) => {
   res.send("application runninng");
 });
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
-// });
-// console.log("PORT NUMBER______", port);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);

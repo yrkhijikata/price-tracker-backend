@@ -66,11 +66,14 @@ async function autoscraper(productObjs) {
   await browser.close();
 }
 
-(async function main() {
+async function autoscraper() {
   const productObjs = await getProducts();
-  // autoscraper(productObjs);
   const key = setInterval(() => autoscraper(productObjs), 600000);
   setTimeout(() => {
     clearInterval(key);
   }, 1800000);
-})();
+}
+
+module.exports = {
+  autoscraper,
+};
