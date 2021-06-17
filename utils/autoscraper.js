@@ -21,12 +21,14 @@ async function getProducts() {
         productObjs.push(productObj);
       });
     });
-  console.log(productObjs);
+  // console.log(productObjs);
 
   return productObjs;
 }
 
-async function autoscraper(productObjs) {
+async function main() {
+  const productObjs = await getProducts();
+  console.log("---------Autoscrapper runnning with " + productObjs.length + " items");
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -44,9 +46,10 @@ async function autoscraper(productObjs) {
 
       price = Number(price.replace(/[^0-9.-]+/g, ""));
 
-      // console.log("price--------", price);
+      console.log("price fetched!!!--------", price);
       await page.goBack();
 
+      // save to database
       await db
         .collection("products")
         .doc(productObjs[i].id)
@@ -56,19 +59,20 @@ async function autoscraper(productObjs) {
         })
         .then(() => console.log("price successfully updated"))
         .catch(() => {
-          console.log("something went wronng!!");
+          console.log("something went wrong!!");
         });
     } catch {
-      await page.close();
+      await page.goBack();
     }
   }
   //   return newPrices;
   await browser.close();
+  console.log("------------Autoscraper stopped running");
 }
 
 async function autoscraper() {
-  const productObjs = await getProducts();
-  const key = setInterval(() => autoscraper(productObjs), 600000);
+  main();
+  const key = setInterval(() => main(), 600000);
   setTimeout(() => {
     clearInterval(key);
   }, 1800000);
