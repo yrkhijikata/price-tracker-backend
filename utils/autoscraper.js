@@ -29,7 +29,9 @@ async function getProducts() {
 async function main() {
   const productObjs = await getProducts();
   console.log("---------Autoscrapper runnning with " + productObjs.length + " items");
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
 
   for (let i = 0; i < productObjs.length; i++) {
