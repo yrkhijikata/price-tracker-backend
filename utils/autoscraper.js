@@ -74,10 +74,10 @@ async function main() {
 
 async function autoscraper() {
   main();
-  const key = setInterval(() => main(), 600000);
-  setTimeout(() => {
-    clearInterval(key);
-  }, 1800000);
+  const key = setInterval(() => main(), 4.32e7);
+  // setTimeout(() => {
+  //   clearInterval(key);
+  // }, 1800000);
 }
 
 module.exports = {

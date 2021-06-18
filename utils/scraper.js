@@ -14,11 +14,15 @@ const getProductInfo = async (url) => {
   try {
     await page.goto(url);
     console.log("Finished loading");
-    // await page.waitFor(2000);
+    // await page.waitFor(4000);
 
+    // await page.waitForSelector("#productTitle", { timeout: 4000 });
     await Promise.race([
-      page.waitForSelector("#landingImage", { timeout: 4000 }),
-      page.waitForSelector("#img-wrapper", { timeout: 4000 }),
+      page.waitForSelector("#priceblock_ourprice", { timeout: 4000 }),
+      page.waitForSelector("#priceblock_saleprice", { timeout: 4000 }),
+      page.waitForSelector("#priceblock_dealprice", { timeout: 4000 }),
+      page.waitForSelector("#price", { timeout: 4000 }),
+      page.waitForSelector("#priceblock_ourprice", { timeout: 4000 }),
     ]);
     // await page.waitForSelector("#landingImage");
     console.log("fininished waiting");
@@ -26,19 +30,21 @@ const getProductInfo = async (url) => {
     const $ = cheerio.load(html);
 
     const title = $("#productTitle").text();
-    // console.log("title", title);
+    console.log("title", title);
     let price =
       $("#priceblock_ourprice").text() ||
       $("#priceblock_saleprice").text() ||
-      $("#price").text();
+      $("#priceblock_dealprice").text() ||
+      $("#price").text() ||
+      $("#priceblock_ourprice").text();
     price = Number(price.replace(/[^0-9.-]+/g, ""));
-    // console.log("price", price);
+    console.log("price", price);
     const imgEl = $("#landingImage") || $("#img-wrapper img");
     // console.log("--------imgEl[0]", imgEl === $("#img-wrapper img"));
-    const img = imgEl[0].attribs.src;
+    const img = imgEl ? imgEl[0].attribs.src : "";
     // const img = $("#landingImage")[0].attribs.src || $("#img-wrapper img")[0].attribs.src;
     // const img = $("#img-wrapper img")[0].attribs.src;
-    // console.log("----------img", img);
+    console.log("----------img", img);
 
     await browser.close();
     console.log({ title, price, img });
