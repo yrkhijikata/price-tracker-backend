@@ -32,7 +32,7 @@ const getProductInfo = async (url) => {
     console.log("fininished waiting");
     const html = await page.content();
     const $ = cheerio.load(html);
-    // console.log("html---------", html);
+    console.log("html---------", html);
 
     const title = $("#productTitle").text();
     console.log("title", title);
