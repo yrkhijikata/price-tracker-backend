@@ -14,16 +14,16 @@ const getProductInfo = async (url) => {
   try {
     await page.goto(url);
     console.log("Finished loading");
-    // await page.waitFor(4000);
+    await page.waitFor(10000);
 
     // await page.waitForSelector("#productTitle", { timeout: 4000 });
-    await Promise.race([
-      page.waitForSelector("#priceblock_ourprice"),
-      page.waitForSelector("#priceblock_saleprice"),
-      page.waitForSelector("#priceblock_dealprice"),
-      page.waitForSelector("#price"),
-      page.waitForSelector("#priceblock_ourprice"),
-    ]);
+    // await Promise.race([
+    //   page.waitForSelector("#priceblock_ourprice"),
+    //   page.waitForSelector("#priceblock_saleprice"),
+    //   page.waitForSelector("#priceblock_dealprice"),
+    //   page.waitForSelector("#price"),
+    //   page.waitForSelector("#priceblock_ourprice"),
+    // ]);
     // await page.waitForSelector("#landingImage");
     console.log("fininished waiting");
     const html = await page.content();
