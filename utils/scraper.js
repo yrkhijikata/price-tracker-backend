@@ -15,7 +15,7 @@ const getProductInfo = async (url) => {
       // "--disable-setuid-sandbox",
       // "--single-process",
       // "--no-zygote",
-      // "--lang=ja",
+      "--lang=ja",
     ],
   };
   const browser = await puppeteer.launch(chromeOptions);
