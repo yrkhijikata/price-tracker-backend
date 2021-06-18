@@ -9,7 +9,7 @@ const getProductInfo = async (url) => {
   const chromeOptions = {
     headless: true,
     defaultViewport: null,
-    args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
+    args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote", "--lang=ja"],
   };
   const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
@@ -18,7 +18,7 @@ const getProductInfo = async (url) => {
   try {
     await page.goto(url);
     console.log("Finished loading");
-    await page.waitFor(5000);
+    await page.waitForTimeout(10000);
 
     // await page.waitForSelector("#productTitle", { timeout: 4000 });
     // await Promise.race([
