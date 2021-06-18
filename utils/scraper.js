@@ -5,9 +5,13 @@ const getProductInfo = async (url) => {
   // const browser = await puppeteer.launch({
   //   headless: false,
   // });
-  const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
+
+  const chromeOptions = {
+    headless: true,
+    defaultViewport: null,
+    args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
+  };
+  const browser = await puppeteer.launch(chromeOptions);
   const page = await browser.newPage();
   // console.log("launched");
 
@@ -28,6 +32,7 @@ const getProductInfo = async (url) => {
     console.log("fininished waiting");
     const html = await page.content();
     const $ = cheerio.load(html);
+    console.log("html---------", html);
 
     const title = $("#productTitle").text();
     console.log("title", title);
