@@ -54,7 +54,9 @@ const getProductInfo = async (url) => {
       $("#priceblock_dealprice").text() ||
       $("#price").text() ||
       $("#priceblock_ourprice").text();
+    console.log("-------price", price);
     price = Number(price.replace(/[^0-9.-]+/g, ""));
+
     console.log("price", price);
     const imgEl = $("#landingImage") || $("#img-wrapper img");
     // console.log("--------imgEl[0]", imgEl === $("#img-wrapper img"));
