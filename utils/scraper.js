@@ -18,6 +18,7 @@ const getProductInfo = async (url) => {
       "--lang=ja",
     ],
   };
+
   const browser = await puppeteer.launch(chromeOptions);
 
   const page = await browser.newPage();
@@ -65,8 +66,9 @@ const getProductInfo = async (url) => {
     await browser.close();
     console.log({ title, price, img });
     return { title, price, img, url };
-  } catch {
+  } catch (err) {
     await browser.close();
+    console.log(err.message);
     return null;
   }
 };

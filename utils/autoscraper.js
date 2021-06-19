@@ -63,7 +63,8 @@ async function main() {
         .catch(() => {
           console.log("something went wrong!!");
         });
-    } catch {
+    } catch (err) {
+      console.log(err.message);
       await page.goBack();
     }
   }
@@ -74,7 +75,7 @@ async function main() {
 
 async function autoscraper() {
   main();
-  const key = setInterval(() => main(), 4.32e7);
+  const key = setInterval(() => main(), 86400000);
   // setTimeout(() => {
   //   clearInterval(key);
   // }, 1800000);
