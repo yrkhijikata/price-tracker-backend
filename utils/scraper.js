@@ -22,6 +22,7 @@ const getProductInfo = async (url) => {
   const browser = await puppeteer.launch(chromeOptions);
 
   const page = await browser.newPage();
+  await page.setGeolocation({ latitude: 35.1815, longitude: 136.9066 });
   // await page.setUserAgent(
   //   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
   // );
